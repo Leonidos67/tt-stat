@@ -3,14 +3,14 @@ const DATA = {
   video: {
     duration: "6.80 с.",
     published: "Опубликовано 24 окт 2026, 16:39",
-    stats: [1000000, 11, 2, 0, 0],            // просмотры, лайки, комментарии, репосты, сохранения
+    stats: [868, 11, 2, 0, 0],            // просмотры, лайки, комментарии, репосты, сохранения
   },
 
   /* ---- Обзор ---- */
   metrics: {
-    views: { label: "Просмотры видео",         value: "1млн" },
+    views: { label: "Просмотры видео",         value: "868K" },   // число ≥ 1000 покажется как 6.5K
     total: { label: "Общее время просмотра",   value: "1 ч. 05 мин. 47 с." },
-    avg:   { label: "Среднее время просмотра", value: "4.8 с" },
+    avg:   { label: "Среднее время просмотра", value: "4.8 с." },
     full:  { label: "Просмотрено полностью",   value: "32.72%" },
     subs:  { label: "Новые подписчики",        value: "0" },
   },
@@ -133,9 +133,11 @@ function bindSlider(prefix, vals, X, Y) {
 }
 
 /* ---------- Обзор ---------- */
+const fmtK = n => n >= 1000 ? (n / 1000).toFixed(1).replace(/\.0$/, "") + "K" : String(n);
 for (const k in DATA.metrics) {
+  const v = DATA.metrics[k].value;
   $("l-" + k).textContent = DATA.metrics[k].label;
-  $("v-" + k).textContent = DATA.metrics[k].value;
+  $("v-" + k).textContent = typeof v === "number" ? fmtK(v) : v;
 }
 areaChart("views-chart", DATA.viewsByHour, { H: 200, max: DATA.viewsTicks.at(-1), ticks: DATA.viewsTicks, xLabels: true, x0: 4 });
 
