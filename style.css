@@ -30,21 +30,62 @@ button{font-family:inherit; color:inherit}
 .pub{margin-top:8px; font-size:12px; color:#6f7077}
 .stats{display:grid; grid-template-columns:repeat(5,1fr); margin:18px 14px 14px}
 .stats div{display:flex; flex-direction:column; align-items:center; gap:6px; font-size:13px; font-weight:500; position:relative}
-.stats div+div::before{content:""; position:absolute; left:0; top:5px; height:14px; border-left:1px solid #dcdcdf}
+.stats div+div::before{content:""; position:absolute; left:0; top:6px; height:18px; border-left:1px solid #dcdcdf}
 .stats svg{fill:#9b9ba1}
 .stats svg circle{fill:var(--bg)}
 
-/* ---------- вкладки ---------- */
+/* ---------- вкладки (ИСПРАВЛЕНО) ---------- */
+/* Обертка для sticky */
+.tabs-wrapper {
+  position: sticky;
+  top: var(--hh);
+  z-index: 5;
+  background: var(--bg);
+}
+
 .tabs{
-  position:sticky; top:var(--hh); z-index:5; background:var(--bg);
-  display:flex; justify-content:space-between; padding:0 14px; border-bottom:1px solid #e3e3e5; overflow-x:auto; scrollbar-width:none;
+  display: flex; 
+  justify-content: space-between; 
+  /* Уменьшили боковые отступы (было 14px), чтобы кнопки помещались */
+  padding: 0 8px; 
+  border-bottom: 1px solid #e3e3e5; 
+  /* Убрали overflow-x: auto, чтобы отключить горизонтальный скролл */
+  position: relative; 
 }
+
+/* Убираем стандартный outline */
+.tabs::-webkit-scrollbar{display:none}
+
 .tabs button{
-  background:none; border:0; flex:none; padding:12px 10px 11px; font-size:15px; font-weight:500;
-  color:var(--muted); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px; white-space:nowrap;
+  background: none; 
+  border: 0; 
+  flex: none; 
+  /* Уменьшили верхний и боковые отступы, а также размер шрифта (15px -> 14px) */
+  padding: 8px 4px 9px; 
+  font-size: 14px; 
+  font-weight: 500;
+  color: var(--muted); 
+  cursor: pointer; 
+  white-space: nowrap;
+  transition: color 0.2s ease;
 }
-.tabs button.on{color:var(--text); border-color:var(--text); font-weight:600}
-.tabs button:focus-visible{outline:2px solid var(--blue); outline-offset:-2px}
+
+.tabs button.on {
+  color: var(--text); 
+  font-weight: 600;
+}
+
+/* Полоска-индикатор */
+.tab-indicator {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  height: 2px;
+  background-color: var(--text);
+  border-radius: 1px;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, width;
+}
 
 main{padding:10px 0 40px}
 .pane{display:flex; flex-direction:column; gap:10px; width:calc(100% - 16px); margin:0 auto}
@@ -167,10 +208,13 @@ input[type=range]:focus-visible{outline:2px solid var(--blue); outline-offset:10
 .m b.fit{font-size:min(22px,9.5cqw); white-space:nowrap}
 .rt{margin-top:4px; font-size:12px; color:var(--muted)}
 
-.tabs::-webkit-scrollbar{display:none}
 .stats svg{width:20px; height:20px}
 
 /* значения метрик: один размер у всех, подбирается скриптом так, чтобы «Общее время» влезло в строку */
 .m b, .m b.fit{display:block; font-size:var(--vs,20px); line-height:1.25; white-space:nowrap; overflow:hidden; padding:0}
 .m{cursor:pointer}
 .m.sel{border-color:var(--blue); background:#f5f8fc}
+
+.stats svg{width:22px; height:22px; fill:#9b9ba1; stroke:#9b9ba1; stroke-width:2; stroke-linejoin:round}
+.stats svg circle{fill:var(--bg); stroke:none}
+.banner .logo{width:56px; height:56px; aspect-ratio:1/1; object-fit:cover}

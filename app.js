@@ -9,7 +9,7 @@ const DATA = {
   /* ---- Обзор ---- */
   metrics: {
     views: { label: "Просмотры видео",         value: 868 },   // число ≥ 1000 покажется как 6.5K
-    total: { label: "Общее время просмотра",   value: "1 ч. 05 мин. 47 с." },
+    total: { label: "Общее время просмотра",   value: "1 ч.:05 мин.:47 с." },
     avg:   { label: "Среднее время просмотра", value: "4.8 с." },
     full:  { label: "Просмотрели видео полностью",   value: "32.72%" },
     subs:  { label: "Новые подписчики",        value: "0" },
@@ -60,32 +60,71 @@ document.querySelectorAll("[data-vid]:not(.sm)").forEach(el => el.insertAdjacent
 $("summary").querySelector(".vid").insertAdjacentHTML("afterbegin", `<i class="chat c1"></i><i class="chat c2"></i><i class="chat c3"></i><i class="chat c4"></i>`);
 $("dur").textContent = DATA.video.duration;
 $("pub").textContent = DATA.video.published;
-const ICONS = [
-  `<path d="M8 5.6v12.8c0 .8.9 1.3 1.6.9l10.2-6.4c.6-.4.6-1.3 0-1.7L9.6 4.7C8.9 4.3 8 4.8 8 5.6z"/>`,
-  `<path d="M12 20.5c-.3 0-.6-.1-.8-.3C7 16.800 3 13.300 3 9.200 3 6.400 5.100 4.500 7.500 4.500c1.800 0 3.600 1 4.500 2.700.9-1.700 2.700-2.700 4.500-2.700 2.400 0 4.500 1.900 4.500 4.700 0 4.100-4 7.600-8.200 11-.2.200-.5.300-.8.300z"/>`,
-  `<path d="M12 3.500c4.700 0 8.500 3.100 8.500 7s-3.800 7-8.500 7c-.8 0-1.600-.1-2.300-.3L5 19.500l1-3.700c-1.700-1.200-2.500-2.900-2.500-5.300 0-3.900 3.800-7 8.500-7z"/><circle cx="8.500" cy="10.500" r="1.100"/><circle cx="12" cy="10.500" r="1.100"/><circle cx="15.500" cy="10.500" r="1.100"/>`,
-  `<path d="M14 4.500l7.500 7L14 18.500v-3.800c-4 0-6.800 1.200-9.500 4.300.5-5.100 3.600-8.800 9.500-9.500z"/>`,
-  `<path d="M7 3.500h10c.8 0 1.500.7 1.500 1.500v15.200c0 .5-.6.800-1 .5L12 16.700l-5.500 4c-.4.300-1 0-1-.5V5c0-.8.7-1.500 1.500-1.500z"/>`,
+const ICONS = [   // все иконки нарисованы в одной сетке 24×24, высота глифа ≈ 17
+  `<path d="M7 4.5L19 12 7 19.5z"/>`,
+  `<path d="M12 20C6.8 16 3.8 13.2 3.8 9.5 3.8 6.9 5.7 5 8 5c1.7 0 3.1 1 4 2.600C12.9 6 14.3 5 16 5c2.3 0 4.2 1.9 4.2 4.500C20.2 13.2 17.2 16 12 20z"/>`,
+  `<path d="M12 4C7.6 4 4 7 4 10.700c0 2.2 1.2 4.1 3.1 5.300l-.9 3.6 3.7-2c.7.1 1.4.2 2.1.2 4.4 0 8-3.3 8-7.100C20 7 16.4 4 12 4z"/><circle cx="8.5" cy="10.9" r="1.2"/><circle cx="12" cy="10.9" r="1.2"/><circle cx="15.5" cy="10.9" r="1.2"/>`,
+  `<path d="M14 5.500l6.5 6-6.5 6v-3.300c-4 0-7 1.2-9.5 4.3.7-5.1 4-8.7 9.5-9.500z"/>`,
+  `<path d="M7 4.500h10v15l-5-4-5 4z"/>`,
 ];
 $("stats").innerHTML = DATA.video.stats.map((v, i) =>
-  `<div><svg viewBox="0 0 24 24" width="20" height="20">${ICONS[i]}</svg>${v.toLocaleString("en-US")}</div>`).join("");
+  `<div><svg viewBox="0 0 24 24" width="22" height="22">${ICONS[i]}</svg>${v.toLocaleString("en-US")}</div>`).join("");
 
 /* ---------- вкладки ---------- */
 const tabBtns = [...document.querySelectorAll(".tabs button")];
+const tabIndicator = document.getElementById("tab-indicator");
+
+// Функция для передвижения полоски
+function moveIndicator(activeBtn) {
+  if (!activeBtn) return;
+  // Вычисляем позицию и ширину активной кнопки
+  const btnLeft = activeBtn.offsetLeft;
+  const btnWidth = activeBtn.offsetWidth;
+  
+  // Применяем стили к полоске
+  tabIndicator.style.width = `${btnWidth}px`;
+  tabIndicator.style.transform = `translateX(${btnLeft}px)`;
+}
+
 function showTab(name, scroll) {
   if (!document.querySelector(`.pane[data-pane="${name}"]`)) name = "overview";
+  
+  let activeBtn = null;
+
   tabBtns.forEach(b => {
     const on = b.dataset.tab === name;
     b.classList.toggle("on", on);
     b.setAttribute("aria-selected", on);
+    if (on) activeBtn = b;
   });
+
+  // Двигаем полоску к активной кнопке
+  if (activeBtn) {
+    moveIndicator(activeBtn);
+  }
+
   document.querySelectorAll(".pane").forEach(p => p.hidden = p.dataset.pane !== name);
   history.replaceState(null, "", "#" + name);
+  
   if (name === "overview" && typeof fitValues === "function") requestAnimationFrame(fitValues);
-  const lim = $("summary").offsetHeight;          // вкладки «прилипли» — вернуть к началу контента
+  
+  const lim = $("summary").offsetHeight;          
   if (scroll && window.scrollY > lim) window.scrollTo(0, lim);
 }
+
 tabBtns.forEach(b => b.addEventListener("click", () => showTab(b.dataset.tab, true)));
+
+// Обновляем позицию полоски при ресайзе окна
+window.addEventListener('resize', () => {
+  const activeBtn = document.querySelector('.tabs button.on');
+  if (activeBtn) moveIndicator(activeBtn);
+});
+
+// Ждем загрузки шрифтов, чтобы размеры кнопок не "прыгали"
+(document.fonts ? document.fonts.ready : Promise.resolve()).then(() => {
+  const activeBtn = document.querySelector('.tabs button.on');
+  if (activeBtn) moveIndicator(activeBtn);
+});
 
 /* ---------- графики ---------- */
 function areaPaths(pts, baseY) {
@@ -203,6 +242,20 @@ bars("places", DATA.places, 1);
 $("likes-text").textContent = DATA.likes.text;
 { const L = DATA.likes, c = areaChart("likes-chart", L.values, { H: 110, max: L.ticks.at(-1), ticks: [...L.ticks].reverse(), unit: "%", dot: true });
   bindSlider("likes", L.values, c.X, c.Y); }
+
+/* ---------- баннер: логотип 1:1 по высоте текстового блока ---------- */
+function syncLogo() {
+  const t = document.querySelector(".bn-text"), l = document.querySelector(".banner .logo");
+  if (!t || !l) return;
+  for (let k = 0; k < 2; k++) {              // два прохода: ширина логотипа влияет на перенос текста
+    const h = t.offsetHeight;
+    if (h) { l.style.width = l.style.height = h + "px"; }
+  }
+}
+syncLogo();
+window.addEventListener("load", syncLogo);
+window.addEventListener("resize", syncLogo);
+(document.fonts ? document.fonts.ready : Promise.resolve()).then(syncLogo);
 
 /* ---------- баннер ---------- */
 $("banner-close").addEventListener("click", () => $("banner").remove());
