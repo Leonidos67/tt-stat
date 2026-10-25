@@ -81,6 +81,7 @@ function showTab(name, scroll) {
   });
   document.querySelectorAll(".pane").forEach(p => p.hidden = p.dataset.pane !== name);
   history.replaceState(null, "", "#" + name);
+  if (name === "overview" && typeof fitValues === "function") requestAnimationFrame(fitValues);
   const lim = $("summary").offsetHeight;          // вкладки «прилипли» — вернуть к началу контента
   if (scroll && window.scrollY > lim) window.scrollTo(0, lim);
 }
@@ -133,6 +134,14 @@ function bindSlider(prefix, vals, X, Y) {
 }
 
 /* ---------- Обзор ---------- */
+// общий размер значений: 20px, а если «Общее время просмотра» не влезает — уменьшаем у всех карточек одинаково
+function fitValues() {
+  const wrap = document.querySelector(".metrics"), total = $("v-total");
+  if (!total.clientWidth) return;                    // вкладка скрыта
+  let s = 20; wrap.style.setProperty("--vs", s + "px");
+  while (total.scrollWidth > total.clientWidth && s > 12) { s -= 0.5; wrap.style.setProperty("--vs", s + "px"); }
+}
+
 const fmtK = n => n >= 1000 ? (n / 1000).toFixed(1).replace(/\.0$/, "") + "K" : String(n);
 for (const k in DATA.metrics) {
   const v = DATA.metrics[k].value;
@@ -145,6 +154,14 @@ $("ret-lead").textContent = `В среднем, зрители смотрели 
 $("ret-sub").textContent = `Большинство зрителей прекратили просмотр на отметке ${DATA.mostLeftAt}. Узнайте, с какого момента они потеряли интерес к вашему видео.`;
 { const c = areaChart("ret-chart", DATA.retention, { H: 110, max: 100, ticks: [100, 50], unit: "%", dot: true });
   bindSlider("ret", DATA.retention, c.X, c.Y); }
+
+fitValues();
+(document.fonts ? document.fonts.ready : Promise.resolve()).then(fitValues);
+window.addEventListener("resize", fitValues);
+// выбор метрики (подсветка рамкой)
+document.querySelectorAll(".m").forEach(m => m.addEventListener("click", () => {
+  document.querySelectorAll(".m").forEach(x => x.classList.toggle("sel", x === m));
+}));
 
 /* ---------- общий рендер полосок ---------- */
 function bars(id, rows, dec) {

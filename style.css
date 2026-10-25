@@ -169,3 +169,8 @@ input[type=range]:focus-visible{outline:2px solid var(--blue); outline-offset:10
 
 .tabs::-webkit-scrollbar{display:none}
 .stats svg{width:20px; height:20px}
+
+/* значения метрик: один размер у всех, подбирается скриптом так, чтобы «Общее время» влезло в строку */
+.m b, .m b.fit{display:block; font-size:var(--vs,20px); line-height:1.25; white-space:nowrap; overflow:hidden; padding:0}
+.m{cursor:pointer}
+.m.sel{border-color:var(--blue); background:#f5f8fc}
