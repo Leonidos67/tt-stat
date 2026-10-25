@@ -28,8 +28,8 @@ button{font-family:inherit; color:inherit}
 /* ---------- сводка по видео ---------- */
 .summary{padding:10px 0 4px; text-align:center}
 .pub{margin-top:8px; font-size:12px; color:#6f7077}
-.stats{display:grid; grid-template-columns:repeat(5,1fr); margin:18px 0 14px}
-.stats div{display:flex; flex-direction:column; align-items:center; gap:10px; font-size:13px; font-weight:500; position:relative}
+.stats{display:grid; grid-template-columns:repeat(5,1fr); margin:18px 14px 14px}
+.stats div{display:flex; flex-direction:column; align-items:center; gap:6px; font-size:13px; font-weight:500; position:relative}
 .stats div+div::before{content:""; position:absolute; left:0; top:5px; height:14px; border-left:1px solid #dcdcdf}
 .stats svg{fill:#9b9ba1}
 .stats svg circle{fill:var(--bg)}
@@ -37,10 +37,10 @@ button{font-family:inherit; color:inherit}
 /* ---------- вкладки ---------- */
 .tabs{
   position:sticky; top:var(--hh); z-index:5; background:var(--bg);
-  display:flex; justify-content:space-between; padding:0 4px; border-bottom:1px solid #e3e3e5;
+  display:flex; justify-content:space-between; padding:0 14px; border-bottom:1px solid #e3e3e5; overflow-x:auto; scrollbar-width:none;
 }
 .tabs button{
-  background:none; border:0; flex:none; padding:10px 8px 11px; font-size:15px; font-weight:500;
+  background:none; border:0; flex:none; padding:12px 10px 11px; font-size:15px; font-weight:500;
   color:var(--muted); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px; white-space:nowrap;
 }
 .tabs button.on{color:var(--text); border-color:var(--text); font-weight:600}
@@ -57,8 +57,8 @@ main{padding:10px 0 40px}
 }
 .big{font-size:36px; font-weight:700; margin-top:4px}
 
-.metrics{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:16px 0 22px}
-.m{border:1px solid #e3e3e5; border-radius:10px; padding:12px 12px 14px; display:flex; flex-direction:column; gap:8px; min-height:92px; min-width:0; container-type:inline-size}
+.metrics{display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:16px 0 22px}
+.m{border:1px solid #e3e3e5; border-radius:10px; padding:11px 12px 12px; display:flex; flex-direction:column; gap:3px; min-width:0; container-type:inline-size}
 .m .lbl{display:block; font-size:13px; color:#111; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
 .m b{font-size:22px; font-weight:700; line-height:1.1}
 
@@ -164,5 +164,8 @@ input[type=range]:focus-visible{outline:2px solid var(--blue); outline-offset:10
 
 .summary .vid{margin:0 auto}
 
-.m b.fit{font-size:min(22px,9.5cqw); white-space:nowrap; line-height:1.1; padding:.2em 0 .1em}
+.m b.fit{font-size:min(22px,9.5cqw); white-space:nowrap}
 .rt{margin-top:4px; font-size:12px; color:var(--muted)}
+
+.tabs::-webkit-scrollbar{display:none}
+.stats svg{width:20px; height:20px}

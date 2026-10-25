@@ -8,10 +8,10 @@ const DATA = {
 
   /* ---- Обзор ---- */
   metrics: {
-    views: { label: "Просмотры видео",         value: "868K" },   // число ≥ 1000 покажется как 6.5K
+    views: { label: "Просмотры видео",         value: 868 },   // число ≥ 1000 покажется как 6.5K
     total: { label: "Общее время просмотра",   value: "1 ч. 05 мин. 47 с." },
     avg:   { label: "Среднее время просмотра", value: "4.8 с." },
-    full:  { label: "Просмотрено полностью",   value: "32.72%" },
+    full:  { label: "Просмотрели видео полностью",   value: "32.72%" },
     subs:  { label: "Новые подписчики",        value: "0" },
   },
   viewsByHour: [0,23,111,85,49,37,54,41,31,57,61,36,33,18,4,21,20,11,32,74,4,1,2,2,1,3,1,2,1,6],
@@ -68,7 +68,7 @@ const ICONS = [
   `<path d="M7 3.500h10c.8 0 1.500.7 1.500 1.500v15.200c0 .5-.6.800-1 .5L12 16.700l-5.500 4c-.4.300-1 0-1-.5V5c0-.8.7-1.500 1.500-1.500z"/>`,
 ];
 $("stats").innerHTML = DATA.video.stats.map((v, i) =>
-  `<div><svg viewBox="0 0 24 24" width="24" height="24">${ICONS[i]}</svg>${v.toLocaleString("en-US")}</div>`).join("");
+  `<div><svg viewBox="0 0 24 24" width="20" height="20">${ICONS[i]}</svg>${v.toLocaleString("en-US")}</div>`).join("");
 
 /* ---------- вкладки ---------- */
 const tabBtns = [...document.querySelectorAll(".tabs button")];
