@@ -46,9 +46,6 @@ button{font-family:inherit; color:inherit}
   flex:none; background:none; border:0; padding:8px 4px 9px;
   font-size:14px; font-weight:500; color:var(--muted); white-space:nowrap; cursor:pointer;
   transition:color .2s ease;
-  /* Убираем эффект нажатия на мобильных */
-  -webkit-tap-highlight-color: transparent; 
-  outline: none; /* Убираем рамку фокуса при клике (но оставляем для клавиатуры ниже) */
 }
 .tabs button.on{color:var(--text); font-weight:600}
 .tab-indicator{
@@ -137,8 +134,8 @@ input[type=range]:focus-visible{outline:2px solid var(--blue); outline-offset:10
 /* ---------- полоски ---------- */
 .src{margin-top:12px}
 #sources .src:first-child,#ages .src:first-child,#places .src:first-child{margin-top:18px}
-.src-h{display:flex; justify-content:space-between; align-items:center; font-size:13px}
-.src-h b{display:flex; align-items:center; gap:4px; font-weight:500} /* Уменьшили жирность с 600 */
+.src-h{display:flex; justify-content:space-between; align-items:center; font-size:15px}
+.src-h b{display:flex; align-items:center; gap:4px; font-weight:600}
 .bar{height:9px; margin-top:8px; border-radius:3px; background:var(--track); overflow:hidden}
 .bar i{display:block; height:100%; min-width:2px; border-radius:3px; background:var(--blue)}
 .bar.zero i{min-width:0}
@@ -146,7 +143,7 @@ input[type=range]:focus-visible{outline:2px solid var(--blue); outline-offset:10
 /* типы зрителей */
 .split{margin-top:18px}
 .split+.split{margin-top:26px}
-.split .nums{display:flex; justify-content:space-between; font-size:13px; font-weight:500} /* Уменьшили жирность с 600 */
+.split .nums{display:flex; justify-content:space-between; font-size:15px; font-weight:600}
 .split .sbar{display:flex; gap:2px; height:9px; margin:10px 0}
 .split .sbar i{display:block; border-radius:3px; background:var(--blue)}
 .split .sbar i+i{min-width:6px; background:#8cc0f0}
@@ -154,11 +151,11 @@ input[type=range]:focus-visible{outline:2px solid var(--blue); outline-offset:10
 
 /* пол */
 .donut{display:block; width:160px; margin:22px auto 24px; overflow:visible}
-.leg{display:flex; align-items:center; gap:12px; padding:13px 0; border-top:1px solid #ececee; font-size:13px; font-weight:400} /* Уменьшили жирность с 500 на 400 */
+.leg{display:flex; align-items:center; gap:12px; padding:13px 0; border-top:1px solid #ececee; font-size:14px; font-weight:500}
 .leg:first-child{border-top:0}
 .leg .dot{width:8px; height:8px; flex:none; border-radius:50%}
 .leg span{flex:1}
-.leg b{display:flex; align-items:center; gap:4px; font-weight:500} /* Вернули 500 для цифр, чтобы они выделялись на фоне текста */
+.leg b{display:flex; align-items:center; gap:4px}
 
 /* ---------- баннер ---------- */
 .banner{display:flex; align-items:flex-start; gap:12px; padding:10px 8px 10px 12px; border-radius:14px; background:#fff}
@@ -193,7 +190,6 @@ input[type=range]:focus-visible{outline:2px solid var(--blue); outline-offset:10
 
 .m b, 
 .big, 
-.stats div, 
 .chart text, 
 .src-h b, 
 .split .nums, 
@@ -205,8 +201,3 @@ input[type=range]:focus-visible{outline:2px solid var(--blue); outline-offset:10
   font-variant-numeric: tabular-nums; /* Делает все цифры одинаковой ширины */
 }
 
-/* Принудительно возвращаем иконкам их стили, чтобы Inter не ломал SVG */
-.stats svg {
-  font-family: inherit;
-  display: flex; /* Убедимся, что flex-контейнер не ломается */
-}
