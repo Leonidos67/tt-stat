@@ -31,7 +31,7 @@ const DATA = {
   ],
 
   /* ---- Зрители ---- */
-  totalViewers: 7200,
+  totalViewers: 7314,
   viewerTypes: [
     { left: ["Новые зрители", 99],  right: ["Вернувшиеся зрители", 1] },
     { left: ["Не подписчики", 97],  right: ["Подписчики", 3] },
@@ -238,7 +238,7 @@ function bars(id, rows, dec) {
 bars("sources", DATA.sources, 1);
 
 /* ---------- Зрители ---------- */
-$("v-total-viewers").textContent = DATA.totalViewers.toLocaleString("en-US");
+$("v-total-viewers").textContent = fmtK(DATA.totalViewers);
 $("types").innerHTML = DATA.viewerTypes.map(t => `
   <div class="split">
     <div class="nums"><span>${t.left[1]}%</span><span>${t.right[1]}%</span></div>
