@@ -4,12 +4,12 @@ const DATA = {
     duration: "6.80 с.",
     cover: "https://i.ibb.co/ksrTwcG4/image.png",
     published: "Опубликовано 24 окт 2026, 16:39",
-    stats: [9000, 243, 8, 11, 14],            // просмотры, лайки, комментарии, репосты, сохранения
+    stats: [9099, 202, 12, 53, 158],            // просмотры, лайки, комментарии, репосты, сохранения
   },
 
   /* ---- Обзор ---- */
   metrics: {
-    views: { label: "Просмотры видео",             value: 9000 },     // число ≥ 1000 покажется как 9K
+    views: { label: "Просмотры видео",             value: 9099 },     // число ≥ 1000 покажется как 9K
     total: { label: "Общее время просмотра",       value: "14 ч.:30 мин.:00 с." },
     avg:   { label: "Среднее время просмотра",     value: "5.8 с." },
     full:  { label: "Просмотрели видео полностью", value: "12%" },
@@ -78,13 +78,9 @@ const tabIndicator = document.getElementById("tab-indicator");
 // Функция для передвижения полоски
 function moveIndicator(activeBtn) {
   if (!activeBtn) return;
-  // Вычисляем позицию и ширину активной кнопки
-  const btnLeft = activeBtn.offsetLeft;
-  const btnWidth = activeBtn.offsetWidth;
-  
-  // Применяем стили к полоске
-  tabIndicator.style.width = `${btnWidth}px`;
-  tabIndicator.style.transform = `translateX(${btnLeft}px)`;
+  const extra = 6;   // на сколько px линия выступает за кнопку с каждой стороны
+  tabIndicator.style.width = `${activeBtn.offsetWidth + extra * 2}px`;
+  tabIndicator.style.transform = `translateX(${activeBtn.offsetLeft - extra}px)`;
 }
 
 function showTab(name, scroll) {
