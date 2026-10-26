@@ -60,6 +60,9 @@ document.querySelectorAll("[data-vid]:not(.sm)").forEach(el => el.insertAdjacent
    <svg class="vplay" viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z" fill="#fff"/></svg>`));
 $("summary").querySelector(".vid").insertAdjacentHTML("afterbegin", `<img src="${DATA.video.cover}" alt="">`);
 $("dur").textContent = DATA.video.duration;
+document.querySelector('[data-pane="overview"] .preview').innerHTML =
+  `<img src="${DATA.video.cover}" alt="">
+   <div class="play"><svg viewBox="0 0 24 24" width="34" height="34"><path d="M7 4.5v15l13-7.5z" fill="#fff"/></svg></div>`;
 $("pub").textContent = DATA.video.published;
 const ICONS = [   // все иконки нарисованы в одной сетке 24×24, высота глифа ≈ 17
   `<path d="M7 4.5L19 12 7 19.5z"/>`,
@@ -188,7 +191,7 @@ areaChart("views-chart", DATA.viewsByHour, { H: 200, max: DATA.viewsTicks.at(-1)
 
 $("ret-lead").textContent = `В среднем, зрители смотрели ваше видео на ${DATA.avgWatchedPercent}%.`;
 $("ret-sub").textContent = `Большинство зрителей прекратили просмотр на отметке ${DATA.mostLeftAt}. Узнайте, с какого момента они потеряли интерес к вашему видео.`;
-{ const c = areaChart("ret-chart", DATA.retention, { H: 110, max: 100, ticks: [100, 50], unit: "%", dot: true });
+{ const c = areaChart("ret-chart", DATA.retention, { H: 84, max: 100, ticks: [100, 50], unit: "%", dot: true });
   bindSlider("ret", DATA.retention, c.X, c.Y); }
 
 fitValues();
