@@ -120,8 +120,8 @@ input[type=range]:focus-visible{outline:2px solid var(--blue); outline-offset:10
 /* обложка в «Коэффициенте удержания» */
 .preview{
   position: relative; 
-  width: 160px;      /* было 150px — сделали чуть шире */
-  height: 255px;     /* добавили высоту (было автоматически ~266px) — сделали ниже */
+  width: 160px;      
+  height: 255px;     
   margin: 18px auto 14px; 
   overflow: hidden; 
   border-radius: 6px; 
@@ -183,3 +183,21 @@ input[type=range]:focus-visible{outline:2px solid var(--blue); outline-offset:10
 }
 .thumbs i:nth-child(2){background:linear-gradient(160deg,#2d6fd0,#6a2bb8)}
 .thumbs i:nth-child(3){background:linear-gradient(160deg,#4b3b8a,#c9803a)}
+
+/* ========================================================= */
+/* НОВОЕ: ПОДКЛЮЧЕНИЕ ШРИФТА INTER ДЛЯ ЦИФР                  */
+/* ========================================================= */
+
+.m b, 
+.big, 
+.stats div, 
+.chart text, 
+.src-h b, 
+.split .nums, 
+.leg b,
+.dur,
+.ret-labels span {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-variant-numeric: tabular-nums; /* Делает все цифры одинаковой ширины */
+}
