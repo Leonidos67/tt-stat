@@ -4,7 +4,7 @@ const DATA = {
     duration: "56.00 с.",
     cover: "https://i.ibb.co/F4MvYDb1/image.png",
     published: "Опубликовано 27 окт 2026, 23:01",
-    stats: [22741, 267, 0, 81, 147],            
+    stats: [22741, 478, 0, 81, 147],            
   },
 
   /* ---- Обзор ---- */
@@ -31,12 +31,12 @@ const DATA = {
   ],
 
   /* ---- Зрители ---- */
-  totalViewers: 7314,
+  totalViewers: 16498,
   viewerTypes: [
     { left: ["Новые зрители", 99],  right: ["Вернувшиеся зрители", 1] },
-    { left: ["Не подписчики", 97],  right: ["Подписчики", 3] },
+    { left: ["Не подписчики", 98],  right: ["Подписчики", 2] },
   ],
-  gender: [["Мужской", 74], ["Женский", 24], ["Другое", 2, true]],
+  gender: [["Мужской", 76], ["Женский", 22], ["Другое", 2, true]],
   ages: [["18 - 24", 28], ["25 - 34", 42], ["35 - 44", 20], ["45+", 10]],
   places: [
     ["Соединенные Штаты", 19.8, true], 
@@ -76,7 +76,7 @@ $("dur").textContent = DATA.video.duration;
 document.querySelector('[data-pane="overview"] .preview').innerHTML =
   `<img src="${DATA.video.cover}" alt="">
    <div class="play">
-     <svg viewBox="0 0 24 24" width="36" height="34">
+     <svg viewBox="0 0 24 24" width="38" height="34">
        <path d="M8 5.14v13.72a1.5 1.5 0 0 0 2.25 1.3l10.5-6.86a1.5 1.5 0 0 0 0-2.6l-10.5-6.86A1.5 1.5 0 0 0 8 5.14z" fill="#fff"/>
      </svg>
    </div>`;
