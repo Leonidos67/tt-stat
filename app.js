@@ -1,29 +1,29 @@
 /* ============ ДАННЫЕ — меняй только этот блок ============ */
 const DATA = {
   video: {
-    duration: "6.80 с.",
-    cover: "https://i.ibb.co/ksrTwcG4/image.png",
-    published: "Опубликовано 24 окт 2646, 16:39",
-    stats: [9163, 267, 14, 53, 160],            
+    duration: "56.00 с.",
+    cover: "https://i.ibb.co/F4MvYDb1/image.png",
+    published: "Опубликовано 27 окт 2026, 23:01",
+    stats: [22741, 267, 0, 81, 147],            
   },
 
   /* ---- Обзор ---- */
   metrics: {
-    views: { label: "Просмотры видео",             value: 9163 }, 
-    total: { label: "Общее время просмотра",       value: "6 ч.:23 мин.:12 с." },
-    avg:   { label: "Среднее время просмотра",     value: "2.5 с." },
-    full:  { label: "Просмотрели видео полностью", value: "7%" },
+    views: { label: "Просмотры видео",             value: 22741 }, 
+    total: { label: "Общее время просмотра",       value: "20 ч.:12 мин.:34 с." },
+    avg:   { label: "Среднее время просмотра",     value: "3.2 с." },
+    full:  { label: "Просмотрели видео полностью", value: "4%" },
     subs:  { label: "Новые подписчики",            value: "34" },
   },
   
-  // Значения по дням (в сумме 9161)
-  viewsByHour: [8000, 1100, 57], 
-  // Значения по оси Y (реальные цифры для 9000+ просмотров)
-  viewsTicks: [3000, 6000, 9000], 
+  // Значения по дням (в сумме ровно 22741)
+  viewsByHour: [18000, 4200, 541], 
+  // Значения по оси Y
+  viewsTicks: [5000, 10000, 15000, 20000], 
   
-  // Данные удержания
-  retention: [100, 78, 64, 55, 48, 43, 39, 36, 33, 31, 28, 25, 22, 18, 14, 12],
-  avgWatchedPercent: 37,
+  // Данные удержания (56 секунд). 
+  retention: [100, 78, 64, 55, 48, 43, 39, 36, 33, 31, 28, 25, 22, 20, 18, 17, 16, 15, 14, 13, 13, 12, 12, 11, 11, 10, 10, 10, 9, 9, 9, 9, 8, 8, 8, 8, 8, 8, 8, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 6, 6, 6, 6, 6, 6, 6, 6],
+  avgWatchedPercent: 6,
   
   sources: [
     ["Для вас", 94.7], ["Личный профиль", 4.1], ["Поиск", 0.8], 
@@ -38,7 +38,7 @@ const DATA = {
   ],
   gender: [["Мужской", 74], ["Женский", 24], ["Другое", 2, true]],
   ages: [["18 - 24", 28], ["25 - 34", 42], ["35 - 44", 20], ["45+", 10]],
-    places: [
+  places: [
     ["Соединенные Штаты", 19.8, true], 
     ["Соединенное Королевство", 13.7], 
     ["Россия", 12.5], 
@@ -77,6 +77,7 @@ document.querySelector('[data-pane="overview"] .preview').innerHTML =
   `<img src="${DATA.video.cover}" alt="">
    <div class="play"><svg viewBox="0 0 24 24" width="34" height="34"><path d="M7 4.5v15l13-7.5z" fill="#fff"/></svg></div>`;
 $("pub").textContent = DATA.video.published;
+
 const ICONS = [
   `<path d="M7 4.5L19 12 7 19.5z"/>`,
   `<path d="M12 20C6.8 16 3.8 13.2 3.8 9.5 3.8 6.9 5.7 5 8 5c1.7 0 3.1 1 4 2.600C12.9 6 14.3 5 16 5c2.3 0 4.2 1.9 4.2 4.500C20.2 13.2 17.2 16 12 20z"/>`,
@@ -84,8 +85,11 @@ const ICONS = [
   `<path d="M14 5.500l6.5 6-6.5 6v-3.300c-4 0-7 1.2-9.5 4.3.7-5.1 4-8.7 9.5-9.500z"/>`,
   `<path d="M7 4.500h10v15l-5-4-5 4z"/>`,
 ];
+
+// Форматирование в K для просмотров
+const fmtK = n => n >= 1000 ? (n / 1000).toFixed(1).replace(/\.0$/, "") + "K" : String(n);
 $("stats").innerHTML = DATA.video.stats.map((v, i) =>
-  `<div><svg viewBox="0 0 24 24" width="22" height="22">${ICONS[i]}</svg>${v.toLocaleString("en-US")}</div>`).join("");
+  `<div><svg viewBox="0 0 24 24" width="22" height="22">${ICONS[i]}</svg>${i === 0 ? fmtK(v) : v.toLocaleString("en-US")}</div>`).join("");
 
 /* ---------- вкладки ---------- */
 const tabBtns = [...document.querySelectorAll(".tabs button")];
@@ -195,20 +199,19 @@ function fitValues() {
   while (total.scrollWidth > total.clientWidth && s > 12) { s -= 0.5; wrap.style.setProperty("--vs", s + "px"); }
 }
 
-const fmtK = n => n >= 1000 ? (n / 1000).toFixed(1).replace(/\.0$/, "") + "K" : String(n);
 for (const k in DATA.metrics) {
   const v = DATA.metrics[k].value;
   $("l-" + k).textContent = DATA.metrics[k].label;
   $("v-" + k).textContent = typeof v === "number" ? fmtK(v) : v;
 }
 
-// ВЕРНУЛ x0: 4, чтобы график прижался влево как было изначально
+// График просмотров 
 areaChart("views-chart", DATA.viewsByHour, { 
   H: 200, 
-  max: 10000, 
+  max: 22000, 
   ticks: DATA.viewsTicks, 
-  xLabels: ["24 окт", "25 окт", "26 окт"], 
-  x0: 4,  // <--- ВЕРНУЛ В ИСХОДНОЕ ПОЛОЖЕНИЕ
+  xLabels: ["27 окт", "28 окт", "29 окт"], 
+  x0: 4,  
   dot: true, 
   slider: false 
 });
