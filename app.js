@@ -4,12 +4,12 @@ const DATA = {
     duration: "56.00 с.",
     cover: "https://i.ibb.co/F4MvYDb1/image.png",
     published: "Опубликовано 27 окт 2026, 23:01",
-    stats: [22741, 478, 0, 81, 147],            
+    stats: [22741, 1106, 0, 81, 147],            
   },
 
   /* ---- Обзор ---- */
   metrics: {
-    views: { label: "Просмотры видео",             value: 22741 }, 
+    views: { label: "Просмотры видео",             value: 23141 }, 
     total: { label: "Общее время просмотра",       value: "20 ч.:12 мин.:34 с." },
     avg:   { label: "Среднее время просмотра",     value: "3.2 с." },
     full:  { label: "Просмотрели видео полностью", value: "4%" },
@@ -31,7 +31,7 @@ const DATA = {
   ],
 
   /* ---- Зрители ---- */
-  totalViewers: 16498,
+  totalViewers: 16000,
   viewerTypes: [
     { left: ["Новые зрители", 99],  right: ["Вернувшиеся зрители", 1] },
     { left: ["Не подписчики", 98],  right: ["Подписчики", 2] },
@@ -39,17 +39,17 @@ const DATA = {
   gender: [["Мужской", 76], ["Женский", 22], ["Другое", 2, true]],
   ages: [["18 - 24", 28], ["25 - 34", 42], ["35 - 44", 20], ["45+", 10]],
   places: [
-    ["Соединенные Штаты", 19.8, true], 
-    ["Соединенное Королевство", 13.7], 
-    ["Россия", 12.5], 
-    ["Нидерланды", 7.5], 
-    ["Германия", 7.1], 
-    ["Швеция", 4.0], 
-    ["Литва", 3.9], 
-    ["Испания", 2.9, true], 
-    ["Украина", 2.7], 
-    ["Кипр", 2.0], 
-    ["Другое", 23.9, true]
+    ["Беларусь", 25.7], 
+    ["Украина", 17.2], 
+    ["Соединенные Штаты", 14.3, true], 
+    ["Казахстан", 11.3], 
+    ["Германия", 6.2], 
+    ["Нидерланды", 3.6], 
+    ["Соединенное Королевство", 3.2], 
+    ["Польша", 1.8], 
+    ["Япония", 1.2], 
+    ["Швеция", 1.1], 
+    ["Другое", 14.4, true]
   ],
 
   /* ---- Вовлеченность ---- */
@@ -91,9 +91,12 @@ const ICONS = [
 ];
 
 // Форматирование в K для просмотров
-const fmtK = n => n >= 1000 ? Math.floor(n / 1000) + "K" : String(n);
+// Для карточек метрик (с десятыми: 22.7K)
+const fmtKExact = n => n >= 1000 ? (n / 1000).toFixed(1).replace(/\.0$/, "") + "K" : String(n);
+// Для статистики под видео (без десятых: 22K)
+const fmtKFloor = n => n >= 1000 ? Math.floor(n / 1000) + "K" : String(n);
 $("stats").innerHTML = DATA.video.stats.map((v, i) =>
-  `<div><svg viewBox="0 0 24 24" width="22" height="22">${ICONS[i]}</svg>${i === 0 ? fmtK(v) : v.toLocaleString("en-US")}</div>`).join("");
+  `<div><svg viewBox="0 0 24 24" width="22" height="22">${ICONS[i]}</svg>${i === 0 ? fmtKFloor(v) : v.toLocaleString("en-US")}</div>`).join("");
 
 /* ---------- вкладки ---------- */
 const tabBtns = [...document.querySelectorAll(".tabs button")];
@@ -206,7 +209,7 @@ function fitValues() {
 for (const k in DATA.metrics) {
   const v = DATA.metrics[k].value;
   $("l-" + k).textContent = DATA.metrics[k].label;
-  $("v-" + k).textContent = typeof v === "number" ? fmtK(v) : v;
+  $("v-" + k).textContent = typeof v === "number" ? fmtKExact(v) : v;
 }
 
 // График просмотров 
@@ -254,7 +257,7 @@ function bars(id, rows, dec) {
 bars("sources", DATA.sources, 1);
 
 /* ---------- Зрители ---------- */
-$("v-total-viewers").textContent = fmtK(DATA.totalViewers);
+$("v-total-viewers").textContent = fmtKExact(DATA.totalViewers);
 $("types").innerHTML = DATA.viewerTypes.map(t => `
   <div class="split">
     <div class="nums"><span>${t.left[1]}%</span><span>${t.right[1]}%</span></div>
