@@ -75,7 +75,11 @@ $("summary").querySelector(".vid").insertAdjacentHTML("afterbegin", `<img src="$
 $("dur").textContent = DATA.video.duration;
 document.querySelector('[data-pane="overview"] .preview').innerHTML =
   `<img src="${DATA.video.cover}" alt="">
-   <div class="play"><svg viewBox="0 0 24 24" width="34" height="34"><path d="M8 5.14v13.72a1 1 0 0 0 1.5.86l11-6.86a1 1 0 0 0 0-1.72l-11-6.86a1 1 0 0 0-1.5.86z" fill="#fff"/></svg></div>`;
+   <div class="play">
+     <svg viewBox="0 0 24 24" width="48" height="48">
+       <path d="M8 5.14v13.72a1.5 1.5 0 0 0 2.25 1.3l10.5-6.86a1.5 1.5 0 0 0 0-2.6l-10.5-6.86A1.5 1.5 0 0 0 8 5.14z" fill="#fff"/>
+     </svg>
+   </div>`;
 $("pub").textContent = DATA.video.published;
 
 const ICONS = [
