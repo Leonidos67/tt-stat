@@ -75,7 +75,7 @@ $("summary").querySelector(".vid").insertAdjacentHTML("afterbegin", `<img src="$
 $("dur").textContent = DATA.video.duration;
 document.querySelector('[data-pane="overview"] .preview').innerHTML =
   `<img src="${DATA.video.cover}" alt="">
-   <div class="play"><svg viewBox="0 0 24 24" width="34" height="34"><path d="M7 4.5v15l13-7.5z" fill="#fff"/></svg></div>`;
+   <div class="play"><svg viewBox="0 0 24 24" width="34" height="34"><path d="M8 5.14v13.72a1 1 0 0 0 1.5.86l11-6.86a1 1 0 0 0 0-1.72l-11-6.86a1 1 0 0 0-1.5.86z" fill="#fff"/></svg></div>`;
 $("pub").textContent = DATA.video.published;
 
 const ICONS = [
@@ -87,7 +87,7 @@ const ICONS = [
 ];
 
 // Форматирование в K для просмотров
-const fmtK = n => n >= 1000 ? (n / 1000).toFixed(1).replace(/\.0$/, "") + "K" : String(n);
+const fmtK = n => n >= 1000 ? Math.floor(n / 1000) + "K" : String(n);
 $("stats").innerHTML = DATA.video.stats.map((v, i) =>
   `<div><svg viewBox="0 0 24 24" width="22" height="22">${ICONS[i]}</svg>${i === 0 ? fmtK(v) : v.toLocaleString("en-US")}</div>`).join("");
 
