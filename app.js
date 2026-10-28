@@ -17,9 +17,9 @@ const DATA = {
   },
   
   // Значения по дням (в сумме ровно 23141)
-  viewsByHour: [18500, 4100, 541], 
+  viewsByHour: [820, 640, 890, 2100, 4850, 6100, 7900, 6200, 4100, 1800, 750, 1100, 1750, 900, 800, 1350, 600, 250, 180, 200],
   // Значения по оси Y
-  viewsTicks: [5000, 10000, 15000, 20000], 
+  viewsTicks: [ 2500, 5000, 7500, 10000 ], 
   
   // Данные удержания (56 секунд). 
   retention: [100, 78, 64, 55, 48, 43, 39, 36, 33, 31, 28, 25, 22, 20, 18, 17, 16, 15, 14, 13, 13, 12, 12, 11, 11, 10, 10, 10, 9, 9, 9, 9, 8, 8, 8, 8, 8, 8, 8, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 6, 6, 6, 6, 6, 6, 6, 6],
@@ -163,9 +163,9 @@ function areaChart(svgId, vals, o) {
        
   let xLabelsHtml = "";
   if (o.xLabels) {
-    xLabelsHtml = vals.map((_, i) => 
-      `<text x="${X(i)}" y="${o.H - 8}" text-anchor="${i === 0 ? 'start' : i === vals.length - 1 ? 'end' : 'middle'}">${o.xLabels[i]}</text>`
-    ).join("");
+    xLabelsHtml = 
+      `<text x="${X(0)}" y="${o.H - 8}" text-anchor="start">${o.xLabels[0]}</text>
+       <text x="${X(vals.length - 1)}" y="${o.H - 8}" text-anchor="end">${o.xLabels[1]}</text>`;
   }
 
   svg.setAttribute("viewBox", `0 0 400 ${o.H}`);
@@ -216,11 +216,11 @@ for (const k in DATA.metrics) {
 // График просмотров 
 areaChart("views-chart", DATA.viewsByHour, { 
   H: 200, 
-  max: 22000, 
-  ticks: DATA.viewsTicks, 
-  xLabels: ["27 окт", "28 окт", "29 окт"], 
+  max: 10000,           // Потолок под наши 23к
+  ticks: DATA.viewsTicks, // Метки 5к, 10к, 15к, 20к
+  xLabels: ["0h", "19h"], // Подписи слева и справа
   x0: 4,  
-  dot: true, 
+  dot: false,           // Без точек (как на скрине)
   slider: false 
 });
 
