@@ -4,26 +4,26 @@ const DATA = {
     duration: "17.27 с.",
     cover: "https://s6.iimage.su/s/30/gKKeatFxHVvIcBiIauA7suL4DWgFGnWpysSbVF4Y2.png",
     published: "Опубликовано 30 окт 2026, 14:29",
-    stats: [4908, 166, 0, 0, 1],            
+    stats: [6012, 163, 0, 9, 0],            
   },
 
   /* ---- Обзор ---- */
   metrics: {
-    views: { label: "Просмотры видео",             value: 4908 }, 
-    total: { label: "Общее время просмотра",       value: "4 ч.:05 мин.:24 с." }, // 4908 * 3.0 / 3600
+    views: { label: "Просмотры видео",             value: 6012 }, 
+    total: { label: "Общее время просмотра",       value: "5 ч.:00 мин.:36 с." }, // 6012 * 3.0 / 3600
     avg:   { label: "Среднее время просмотра",     value: "3.0 с." },             // Реалистично для 17 сек
     full:  { label: "Просмотрели видео полностью", value: "6%" },                 // 6% доходят до конца
-    subs:  { label: "Новые подписчики",            value: "17" },                 // ~0.3% от просмотров
+    subs:  { label: "Новые подписчики",            value: "21" },                 // ~0.3% от просмотров
   },
   
-  // 11 значений (в сумме ровно 4908, первые 2 на месте)
-  viewsByHour: [850, 2600, 550, 350, 300, 150, 60, 30, 10, 5, 3],
+  // 11 значений (в сумме ровно 6012, первые 2 на месте)
+  viewsByHour: [150, 2600, 800, 1050, 700, 250, 100, 100, 80, 60, 30, 22],
   // Значения по оси Y (чтобы график не упирался в потолок)
   viewsTicks: [1000, 2000, 3000], 
   
   // Данные удержания (17 секунд: от 0 до 17)
   retention: [100, 78, 64, 55, 48, 43, 39, 36, 33, 31, 28, 25, 22, 20, 18, 17, 16, 15],
-  avgWatchedPercent: 6,
+  avgWatchedPercent: 5,
   
   sources: [
     ["Для вас", 93.2], 
@@ -101,7 +101,7 @@ const fmtKExact = n => n >= 1000 ? (n / 1000).toFixed(1).replace(/\.0$/, "") + "
 const fmtKFloor = n => n >= 1000 ? Math.floor(n / 1000) + "K" : String(n);
 
 $("stats").innerHTML = DATA.video.stats.map((v, i) =>
-  `<div><svg viewBox="0 0 24 24" width="22" height="22">${ICONS[i]}</svg>${i === 0 ? fmtKExact(v) : v.toLocaleString("en-US")}</div>`).join("");
+  `<div><svg viewBox="0 0 24 24" width="22" height="22">${ICONS[i]}</svg>${v.toLocaleString("en-US")}</div>`).join("");
 
 /* ---------- вкладки ---------- */
 const tabBtns = [...document.querySelectorAll(".tabs button")];
