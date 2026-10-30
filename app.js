@@ -1,37 +1,42 @@
 /* ============ ДАННЫЕ — меняй только этот блок ============ */
 const DATA = {
   video: {
-    duration: "56.00 с.",
-    cover: "https://i.ibb.co/F4MvYDb1/image.png",
-    published: "Опубликовано 27 окт 2026, 23:01",
-    stats: [23141, 1106, 0, 81, 147],            
+    duration: "17.27 с.",
+    cover: "https://s6.iimage.su/s/30/gKKeatFxHVvIcBiIauA7suL4DWgFGnWpysSbVF4Y2.png",
+    published: "Опубликовано 30 окт 2026, 14:29",
+    stats: [4908, 166, 0, 0, 1],            
   },
 
   /* ---- Обзор ---- */
   metrics: {
-    views: { label: "Просмотры видео",             value: 23141 }, 
-    total: { label: "Общее время просмотра",       value: "20 ч.:12 мин.:34 с." },
-    avg:   { label: "Среднее время просмотра",     value: "3.2 с." },
-    full:  { label: "Просмотрели видео полностью", value: "4%" },
-    subs:  { label: "Новые подписчики",            value: "34" },
+    views: { label: "Просмотры видео",             value: 4908 }, 
+    total: { label: "Общее время просмотра",       value: "4 ч.:05 мин.:24 с." }, // 4908 * 3.0 / 3600
+    avg:   { label: "Среднее время просмотра",     value: "3.0 с." },             // Реалистично для 17 сек
+    full:  { label: "Просмотрели видео полностью", value: "6%" },                 // 6% доходят до конца
+    subs:  { label: "Новые подписчики",            value: "17" },                 // ~0.3% от просмотров
   },
   
-  // Значения по дням (в сумме ровно 23141)
-  viewsByHour: [820, 640, 890, 2100, 4850, 6100, 7900, 6200, 4100, 1800, 750, 1100, 1750, 900, 800, 1350, 600, 250, 180, 200],
-  // Значения по оси Y
-  viewsTicks: [ 2500, 5000, 7500, 10000 ], 
+  // 11 значений (в сумме ровно 4908, первые 2 на месте)
+  viewsByHour: [850, 2600, 550, 350, 300, 150, 60, 30, 10, 5, 3],
+  // Значения по оси Y (чтобы график не упирался в потолок)
+  viewsTicks: [1000, 2000, 3000], 
   
-  // Данные удержания (56 секунд). 
-  retention: [100, 78, 64, 55, 48, 43, 39, 36, 33, 31, 28, 25, 22, 20, 18, 17, 16, 15, 14, 13, 13, 12, 12, 11, 11, 10, 10, 10, 9, 9, 9, 9, 8, 8, 8, 8, 8, 8, 8, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 6, 6, 6, 6, 6, 6, 6, 6],
+  // Данные удержания (17 секунд: от 0 до 17)
+  retention: [100, 78, 64, 55, 48, 43, 39, 36, 33, 31, 28, 25, 22, 20, 18, 17, 16, 15],
   avgWatchedPercent: 6,
   
   sources: [
-    ["Для вас", 94.7], ["Личный профиль", 4.1], ["Поиск", 0.8], 
-    ["Другое", 0.3], ["Личные сообщения", 0.1], ["Звук", 0.0], ["Подписки", 0.0]
+    ["Для вас", 93.2], 
+    ["Личный профиль", 4.8], 
+    ["Поиск", 1.2], 
+    ["Другое", 0.5], 
+    ["Звук", 0.2], 
+    ["Подписки", 0.1], 
+    ["Личные сообщения", 0.0]
   ],
 
   /* ---- Зрители ---- */
-  totalViewers: 17000,
+  totalViewers: 3900,
   viewerTypes: [
     { left: ["Новые зрители", 99],  right: ["Вернувшиеся зрители", 1] },
     { left: ["Не подписчики", 98],  right: ["Подписчики", 2] },
@@ -39,19 +44,18 @@ const DATA = {
   gender: [["Мужской", 76], ["Женский", 22], ["Другое", 2, true]],
   ages: [["18 - 24", 28], ["25 - 34", 42], ["35 - 44", 20], ["45+", 10]],
   
-  // Обновленные места (немного измененные значения от скрина знакомого)
   places: [
-    ["Беларусь", 24.1], 
-    ["Украина", 16.8], 
-    ["Соединенные Штаты", 13.9, true], 
-    ["Казахстан", 11.8], 
-    ["Германия", 6.7], 
-    ["Нидерланды", 3.9], 
-    ["Соединенное Королевство", 3.5], 
-    ["Польша", 2.1], 
-    ["Япония", 1.5], 
-    ["Швеция", 1.3], 
-    ["Другое", 14.4, true] // <--- Вот тут ошибка в подсчетах была у тебя или у меня
+    ["Беларусь", 26.5], 
+    ["Украина", 15.2], 
+    ["Соединенные Штаты", 12.4, true], 
+    ["Казахстан", 10.9], 
+    ["Германия", 7.1], 
+    ["Польша", 4.3], 
+    ["Румыния", 3.8], 
+    ["Нидерланды", 3.2], 
+    ["Соединенное Королевство", 2.8], 
+    ["Турция", 2.0], 
+    ["Другое", 11.8, true]
   ],
 
   /* ---- Вовлеченность ---- */
@@ -97,7 +101,7 @@ const fmtKExact = n => n >= 1000 ? (n / 1000).toFixed(1).replace(/\.0$/, "") + "
 const fmtKFloor = n => n >= 1000 ? Math.floor(n / 1000) + "K" : String(n);
 
 $("stats").innerHTML = DATA.video.stats.map((v, i) =>
-  `<div><svg viewBox="0 0 24 24" width="22" height="22">${ICONS[i]}</svg>${i === 0 ? fmtKFloor(v) : v.toLocaleString("en-US")}</div>`).join("");
+  `<div><svg viewBox="0 0 24 24" width="22" height="22">${ICONS[i]}</svg>${i === 0 ? fmtKExact(v) : v.toLocaleString("en-US")}</div>`).join("");
 
 /* ---------- вкладки ---------- */
 const tabBtns = [...document.querySelectorAll(".tabs button")];
@@ -165,7 +169,7 @@ function areaChart(svgId, vals, o) {
   if (o.xLabels) {
     xLabelsHtml = 
       `<text x="${X(0)}" y="${o.H - 8}" text-anchor="start">${o.xLabels[0]}</text>
-       <text x="${X(vals.length - 1)}" y="${o.H - 8}" text-anchor="end">${o.xLabels[1]}</text>`;
+       <text x="${X(vals.length - 1)}" y="${o.H - 8}" text-anchor="end">${o.xLabels[o.xLabels.length - 1]}</text>`;
   }
 
   svg.setAttribute("viewBox", `0 0 400 ${o.H}`);
@@ -177,7 +181,7 @@ function areaChart(svgId, vals, o) {
     `<line x1="${x0}" x2="${x1 + 4}" y1="${base}" y2="${base}" stroke="#c9cacd"/>` +
     `<path d="${area}" fill="url(#${gid})"/>` +
     `<path d="${line}" fill="none" stroke="${BLUE}" stroke-width="1.6" stroke-linejoin="round"/>` +
-    (o.dot ? vals.map((v, i) => `<circle cx="${X(i)}" cy="${Y(v)}" r="3.5" fill="#fff" stroke="${BLUE}" stroke-width="2"/>`).join("") : "") +
+    (o.dot ? vals.map((v, i) => `<circle cx="${X(i)}" cy="${Y(v)}" r="${o.dotRadius || 1.5}" fill="#fff" stroke="${BLUE}" stroke-width="${o.dotRadius ? 1.5 : 2}"/>`).join("") : "") +
     (o.slider ? `<line x1="${x0}" x2="${x0}" y1="${top}" y2="${base}" stroke="${BLUE}" stroke-width="1"/>
               <circle id="${svgId}-dot" r="4" fill="#fff" stroke="${BLUE}" stroke-width="2"/>` : "") +
     xLabelsHtml;
@@ -213,14 +217,15 @@ for (const k in DATA.metrics) {
   $("v-" + k).textContent = typeof v === "number" ? fmtKExact(v) : v;
 }
 
-// График просмотров 
+// График просмотров по дням
 areaChart("views-chart", DATA.viewsByHour, { 
   H: 200, 
-  max: 10000,           // Потолок под наши 23к
-  ticks: DATA.viewsTicks, // Метки 5к, 10к, 15к, 20к
-  xLabels: ["0h", "19h"], // Подписи слева и справа
-  x0: 4,  
-  dot: false,           // Без точек (как на скрине)
+  max: 3000, 
+  ticks: DATA.viewsTicks, 
+  xLabels: ["0h", "10h"], 
+  x0: 15,  
+  dot: true, 
+  dotRadius: 2, // <--- Уменьшили размер точек
   slider: false 
 });
 
