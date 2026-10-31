@@ -4,20 +4,20 @@ const DATA = {
     duration: "13.27 с.",
     cover: "https://i.ibb.co/rBMkQ5d/image.png",
     published: "Опубликовано 31 окт 2026, 04:28",
-    stats: [7063, 236, 0, 39, 53],            
+    stats: [12113, 488, 0, 50, 51],            
   },
 
   /* ---- Обзор ---- */
   metrics: {
-    views: { label: "Просмотры видео",             value: 7063 }, 
-    total: { label: "Общее время просмотра",       value: "4 ч.:42 мин.:40 с." }, // 7063 * 2.4 / 3600
-    avg:   { label: "Среднее время просмотра",     value: "2.4 с." },             // Реалистично для 13 сек
-    full:  { label: "Просмотрели видео полностью", value: "11%" },                // 11% доходят до конца
-    subs:  { label: "Новые подписчики",            value: "51" },                 // ~0.34% от просмотров
+    views: { label: "Просмотры видео",             value: 12113 }, 
+    total: { label: "Общее время просмотра",       value: "8 ч.:05 мин.:40 с." }, // 12410 * 2.4 / 3600
+    avg:   { label: "Среднее время просмотра",     value: "2.4 с." },             
+    full:  { label: "Просмотрели видео полностью", value: "11%" },                
+    subs:  { label: "Новые подписчики",            value: "42" },                 
   },
   
-  // 15 значений (0h - 14h). Пик на 8-9 часу, сумма ровно 7063
-  viewsByHour: [170, 253, 200, 200, 780, 4800, 297, 163, 50, 80, 40, 30, 0,],
+  // 15 значений (0h - 14h). Пик на 6-м часу (5200), сумма ровно 12410
+  viewsByHour: [250, 450, 350, 600, 1400, 5200, 1800, 900, 550, 350, 250, 150, 80, 50, 30],
   // Значения по оси Y
   viewsTicks: [2000, 4000, 6000], 
   
@@ -36,7 +36,7 @@ const DATA = {
   ],
 
   /* ---- Зрители ---- */
-  totalViewers: 5800, // Уникальных зрителей чуть меньше
+  totalViewers: 10100,
   viewerTypes: [
     { left: ["Новые зрители", 98],  right: ["Вернувшиеся зрители", 2] },
     { left: ["Не подписчики", 97],  right: ["Подписчики", 3] },
@@ -55,7 +55,7 @@ const DATA = {
     ["Россия", 3.7], 
     ["Соединенное Королевство", 3.1], 
     ["Германия", 2.8], 
-    ["Другое", 7.7, true]
+    ["Другое", 7.4, true]
   ],
 
   /* ---- Вовлеченность ---- */
@@ -101,7 +101,7 @@ const fmtKExact = n => n >= 1000 ? (n / 1000).toFixed(1).replace(/\.0$/, "") + "
 const fmtKFloor = n => n >= 1000 ? Math.floor(n / 1000) + "K" : String(n);
 
 $("stats").innerHTML = DATA.video.stats.map((v, i) =>
-  `<div><svg viewBox="0 0 24 24" width="22" height="22">${ICONS[i]}</svg>${v.toLocaleString("en-US")}</div>`).join("");
+  `<div><svg viewBox="0 0 24 24" width="22" height="22">${ICONS[i]}</svg>${i === 0 ? fmtKExact(v) : v.toLocaleString("en-US")}</div>`).join("");
 
 /* ---------- вкладки ---------- */
 const tabBtns = [...document.querySelectorAll(".tabs button")];
@@ -220,9 +220,9 @@ for (const k in DATA.metrics) {
 // График просмотров по часам
 areaChart("views-chart", DATA.viewsByHour, { 
   H: 200, 
-  max: 6000, // Потолок под пик 2100
+  max: 5500, // Потолок под пик 5200
   ticks: DATA.viewsTicks, 
-  xLabels: ["0h", "13h"], 
+  xLabels: ["0h", "14h"], 
   x0: 15,  
   dot: true, 
   dotRadius: 2,
