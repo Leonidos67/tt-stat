@@ -101,7 +101,7 @@ const fmtKExact = n => n >= 1000 ? (n / 1000).toFixed(1).replace(/\.0$/, "") + "
 const fmtKFloor = n => n >= 1000 ? Math.floor(n / 1000) + "K" : String(n);
 
 $("stats").innerHTML = DATA.video.stats.map((v, i) =>
-  `<div><svg viewBox="0 0 24 24" width="22" height="22">${ICONS[i]}</svg>${i === 0 ? fmtKExact(v) : v.toLocaleString("en-US")}</div>`).join("");
+  `<div><svg viewBox="0 0 24 24" width="22" height="22">${ICONS[i]}</svg>${i === 0 ? fmtKFloor(v) : v.toLocaleString("en-US")}</div>`).join("");
 
 /* ---------- вкладки ---------- */
 const tabBtns = [...document.querySelectorAll(".tabs button")];
