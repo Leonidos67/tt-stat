@@ -4,20 +4,20 @@ const DATA = {
     duration: "13.27 с.",
     cover: "https://i.ibb.co/rBMkQ5d/image.png",
     published: "Опубликовано 31 окт 2026, 04:28",
-    stats: [12113, 488, 0, 50, 51],            
+    stats: [13012, 319, 0, 57, 55],            
   },
 
   /* ---- Обзор ---- */
   metrics: {
-    views: { label: "Просмотры видео",             value: 12113 }, 
-    total: { label: "Общее время просмотра",       value: "8 ч.:05 мин.:40 с." }, // 12410 * 2.4 / 3600
+    views: { label: "Просмотры видео",             value: 13012 }, 
+    total: { label: "Общее время просмотра",       value: "8 ч.:40 мин.:29 с." },
     avg:   { label: "Среднее время просмотра",     value: "2.4 с." },             
     full:  { label: "Просмотрели видео полностью", value: "11%" },                
-    subs:  { label: "Новые подписчики",            value: "42" },                 
+    subs:  { label: "Новые подписчики",            value: "44" },                 
   },
   
-  // 15 значений (0h - 14h). Пик на 6-м часу (5200), сумма ровно 12410
-  viewsByHour: [250, 450, 350, 600, 1400, 5200, 1800, 900, 550, 350, 250, 150, 80, 50, 30],
+  // 15 значений (0h - 14h). Пик на 6-м часу (5400), сумма ровно 13012
+  viewsByHour: [250, 450, 350, 600, 1500, 5400, 1900, 900, 550, 350, 250, 150, 80, 50, 32],
   // Значения по оси Y
   viewsTicks: [2000, 4000, 6000], 
   
@@ -36,7 +36,7 @@ const DATA = {
   ],
 
   /* ---- Зрители ---- */
-  totalViewers: 10100,
+  totalViewers: 10500,
   viewerTypes: [
     { left: ["Новые зрители", 98],  right: ["Вернувшиеся зрители", 2] },
     { left: ["Не подписчики", 97],  right: ["Подписчики", 3] },
@@ -60,9 +60,10 @@ const DATA = {
 
   /* ---- Вовлеченность ---- */
   likes: {
-    values: [35, 22, 14, 8, 6, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0],
-    ticks: [20, 40, 60],
-    text: "Большинство зрителей поставили лайк этому видео на отметке 0:00. Узнайте, какой момент понравился зрителям.",
+    // 14 точек (0-13 секунд). Пик на 1-й секунде (35%), второй пик на 8-й (30%)
+    values: [10, 36, 20, 10, 6, 4, 3, 8, 2, 1, 1, 1, 1, 1],
+    ticks: [20, 40], 
+    text: "Большинство зрителей поставили лайк этому видео на отметке 0:01. Узнайте, какой момент понравился зрителям.",
   },
 };
 /* ========================================================= */
@@ -72,11 +73,11 @@ const BLUE = "#0a74da";
 const CHEV = `<svg viewBox="0 0 24 24" width="14" height="14"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 
 /* ---------- сводка по видео ---------- */
+// Убрали текст про самолетик, оставили только кнопку Play
 document.querySelectorAll("[data-vid]:not(.sm)").forEach(el => el.insertAdjacentHTML("afterbegin",
-  `<p class="vt">когда вместо звезд решил заправить самолетик подарком - RubUP</p>
-   <i class="isl"></i><i class="road"></i>
-   <div class="vbar"><b>Посадка на воду</b><small>Активировать · 50 ★</small></div>
-   <svg class="vplay" viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z" fill="#fff"/></svg>`));
+  `<svg class="vplay" viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z" fill="#fff"/></svg>`));
+
+// Подставляем картинку в шапку и в блок удержания
 $("summary").querySelector(".vid").insertAdjacentHTML("afterbegin", `<img src="${DATA.video.cover}" alt="">`);
 $("dur").textContent = DATA.video.duration;
 document.querySelector('[data-pane="overview"] .preview').innerHTML =
@@ -86,6 +87,16 @@ document.querySelector('[data-pane="overview"] .preview').innerHTML =
        <path d="M8 5.14v13.72a1.5 1.5 0 0 0 2.25 1.3l10.5-6.86a1.5 1.5 0 0 0 0-2.6l-10.5-6.86A1.5 1.5 0 0 0 8 5.14z" fill="#fff"/>
      </svg>
    </div>`;
+
+// Подставляем картинку и иконку Play в блок лайков (Вовлеченность)
+document.querySelector('[data-pane="engagement"] .big-vid').innerHTML = 
+  `<img src="${DATA.video.cover}" alt="" style="width:100%; height:100%; object-fit:cover; border-radius:6px; opacity:0.7;">
+   <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center;">
+     <svg viewBox="0 0 24 24" width="38" height="34">
+       <path d="M8 5.14v13.72a1.5 1.5 0 0 0 2.25 1.3l10.5-6.86a1.5 1.5 0 0 0 0-2.6l-10.5-6.86A1.5 1.5 0 0 0 8 5.14z" fill="#fff"/>
+     </svg>
+   </div>`;
+
 $("pub").textContent = DATA.video.published;
 
 const ICONS = [
@@ -220,7 +231,7 @@ for (const k in DATA.metrics) {
 // График просмотров по часам
 areaChart("views-chart", DATA.viewsByHour, { 
   H: 200, 
-  max: 5500, // Потолок под пик 5200
+  max: 6000, 
   ticks: DATA.viewsTicks, 
   xLabels: ["0h", "14h"], 
   x0: 15,  
@@ -290,8 +301,17 @@ bars("places", DATA.places, 1);
 
 /* ---------- Вовлеченность ---------- */
 $("likes-text").textContent = DATA.likes.text;
-{ const L = DATA.likes, c = areaChart("likes-chart", L.values, { H: 110, max: L.ticks.at(-1), ticks: [...L.ticks].reverse(), unit: "%", dot: false, slider: true });
-  bindSlider("likes", L.values, c.X, c.Y); }
+{ const L = DATA.likes, c = areaChart("likes-chart", L.values, { 
+    H: 110, 
+    max: 40, 
+    ticks: L.ticks, 
+    unit: "%", 
+    dot: false, 
+    slider: true,
+    xLabels: false 
+  });
+  bindSlider("likes", L.values, c.X, c.Y); 
+}
 
 /* ---------- баннер: логотип 1:1 по высоте текстового блока ---------- */
 function syncLogo() {
